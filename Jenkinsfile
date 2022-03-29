@@ -45,6 +45,18 @@ pipeline{
                     } 
                 }
             }
+           stage("Deploying"){
+      
+      steps{
+        
+        withKubeConfig([credentialsId: 'kunalcaps']){
+          
+          
+          sh 'kubectl apply -f kubernetes/mongodb/mongodb.yml'
+          sh 'kubectl apply -f kubernetes/app/deployment.yml'
+          sh 'kubectl apply -f kubernetes/app/nodeport.yml'
+        }
+      }
 
       }
 }
